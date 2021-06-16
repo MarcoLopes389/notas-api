@@ -21,11 +21,18 @@ describe('Testes de funcionalidades essenciais', () => {
 
     })
 
-    test('Falha ao encontrar uma rota', async () => {
+    test('Falha ao encontrar uma rota retorna 404', async () => {
 
         const { status } = await supertest(app).get('rotaquenaoexiste')
 
         expect(status).toBe(404)
+    })
+
+    test('Envio de dados de edição inválidos retorna erro 500', async () => {
+
+        const { status } = await supertest(app).patch('/notes/id')
+
+        expect(status).toBe(500)
     })
 
     afterAll(() => {
