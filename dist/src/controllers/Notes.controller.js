@@ -1,9 +1,26 @@
 "use strict";
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
-const express_1 = __importDefault(require("express"));
-const router = express_1.default.Router();
-exports.default = router;
+class RouterNotes {
+    static search(req, res) {
+        return res.json({
+            ok: true
+        });
+    }
+    static edit(req, res) {
+        return res.json({
+            ok: true
+        });
+    }
+    static create(req, res) {
+        return res.json({
+            ok: true
+        });
+    }
+    static delete(req, res) {
+        return res.json({
+            ok: true
+        });
+    }
+}
+exports.default = RouterNotes;
 //# sourceMappingURL=Notes.controller.js.map
