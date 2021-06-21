@@ -1,4 +1,3 @@
-import Body from '@src/@types/body'
 import supertest from 'supertest'
 import app from '../../src/server'
 
