@@ -1,6 +1,6 @@
 import { Request, Response } from 'express'
 
-export class User {
+export default class RouterUser {
 
     public static login(req: Request, res: Response) {
         return res.json({
