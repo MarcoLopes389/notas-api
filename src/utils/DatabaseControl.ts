@@ -52,21 +52,43 @@ export class UserDatabase {
     
     public static async create(user: user){
 
+        const query = 'insert into users("name", "email", "password") values($1, $2, $3)'
+        const { name, email, password } = user
+        const client = await db.connect()
+        await client.query(query, [name, email, password])
+
     }
 
     public static async delete(id: Number){
+
+        const query = 'delete from users where id = $1'
+        const client = await db.connect()
+        await client.query(query, [id])
 
     }
 
     public static async edit(user: user, id: Number){
 
+        const query = 'update users set name = $1, email = $2, password = $3 where id = $4'
+        const { name, email, password } = user
+        const client = await db.connect()
+        await client.query(query, [name, email, password, id])
+
     }
 
     public static async find(id: Number){
 
+        const query = 'select from users where id = $1'
+        const client = await db.connect()
+        await client.query(query, [id])
+
     }
 
     public static async findAll(){
+
+        const query = 'select * from users'
+        const client = await db.connect()
+        await client.query(query)
 
     }
 }
