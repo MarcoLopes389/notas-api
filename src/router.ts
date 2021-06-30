@@ -9,6 +9,7 @@ router.patch('/notes/edit', RouterNotes.edit)
 router.get('/notes/list', RouterNotes.search)
 router.post('/notes/new', RouterNotes.create)
 router.delete('/notes/delete', RouterNotes.delete)
+router.get('/notes/listAll', RouterNotes.searchAll)
 
 // Users
 router.post('/users/login', RouterUser.login)
