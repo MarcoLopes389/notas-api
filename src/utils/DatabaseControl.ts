@@ -1,24 +1,28 @@
 import db from '../config/database'
+import note from '@src/@types/note.type'
+import user from '@src/@types/user.type'
+
+const client = db.connect()
 
 export class NoteDatabase {
 
-    public static create(){
+    public static async create(note: note){
+        
+    }
+
+    public static async delete(id: Number){
 
     }
 
-    public static delete(){
+    public static async edit(note: note, id: Number){
 
     }
 
-    public static edit(){
+    public static async find(id: Number){
 
     }
 
-    public static find(){
-
-    }
-
-    public static findAll(){
+    public static async findAll(){
 
     }
 
@@ -26,23 +30,23 @@ export class NoteDatabase {
 
 export class UserDatabase {
     
-    public static create(){
+    public static async create(user: user){
 
     }
 
-    public static delete(){
+    public static async delete(id: Number){
 
     }
 
-    public static edit(){
+    public static async edit(user: user, id: Number){
 
     }
 
-    public static find(){
+    public static async find(id: Number){
 
     }
 
-    public static findAll(){
+    public static async findAll(){
 
     }
 }
