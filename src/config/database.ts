@@ -5,7 +5,7 @@ const db = new pg.Pool({
     port: 5432,
     user: 'postgres',
     password: 'Postgres',
-    database: 'sqlnode'
+    database: 'notasapi'
 })
 
 export default db
