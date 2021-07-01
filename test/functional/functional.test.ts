@@ -2,9 +2,6 @@ import supertest from 'supertest'
 import app from '../../src/server'
 
 describe('Testes de funcionalidades essenciais', () => {
-    beforeAll(() => {
-
-    })
 
     test('Nota sendo retornada com sucesso', async () => {
 
@@ -27,7 +24,7 @@ describe('Testes de funcionalidades essenciais', () => {
         const input = {
             note: 'Nota qualquer',
             title: 'Um título qualquer',
-            user: 'Marco',
+            user: 1,
             created_at: '2021/06/14',
             updated_at: '2021/06/14'
         }
@@ -42,12 +39,9 @@ describe('Testes de funcionalidades essenciais', () => {
 
     test('Nota sendo deletada com sucesso', async () => {
 
-        const { status } = await supertest(app).delete(`/notes/${id}`)
+        const { status } = await supertest(app).delete(`/notes/delete`).send({ id: id })
 
         expect(status).toBe(200)
     })
 
-    afterAll(() => {
-        
-    })
 })

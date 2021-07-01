@@ -5,12 +5,17 @@ class RouterNotes {
 
     public static async searchAll(req: Request, res: Response) {
 
-        const { idUser } = req.body
+        const { user } = req.body
 
-        await NoteDatabase.findAll(idUser)
-        return res.json({
-            ok: true
-        })
+        try {
+            const resposta = await NoteDatabase.findAll(user)
+            return res.json(resposta)
+        } catch {
+            return res.status(404).json({
+                code: 404,
+                err: 'Não foram encontradas notas'
+            })
+        }
     }
 
     public static async search(req: Request, res: Response) {
@@ -68,9 +73,9 @@ class RouterNotes {
 
         } catch {
 
-            return res.status(400).json({
-                code: 400,
-                err: 'Dado inválido'
+            return res.status(500).json({
+                code: 500,
+                err: 'Nota já existe'
             })
 
         }

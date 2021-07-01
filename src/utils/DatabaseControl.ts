@@ -1,6 +1,7 @@
 import db from '../config/database'
 import note from '@src/@types/note.type'
 import user from '@src/@types/user.type'
+import { createBuilderStatusReporter } from 'typescript'
 
 export class NoteDatabase {
 
@@ -32,17 +33,27 @@ export class NoteDatabase {
 
     public static async find(id: Number){
 
-        const query = 'select from notes where id = $1'
+        const query = 'select * from notes where id = $1'
         const client = await db.connect()
-        await client.query(query, [id])
+        const resposta = await client.query(query, [id])
+        if(resposta.rows == []) {
+            throw Error('Não foram encontrados dados')
+        } else {
+            return resposta.rows
+        }
 
     }
 
     public static async findAll(user: Number){
 
-        const query = 'select * from notes where user = $1'
+        const query = 'select note, title, id from notes where "user" = $1'
         const client = await db.connect()
-        await client.query(query, [user])
+        const resposta = await client.query(query, [user])
+        if(resposta.rows == []) {
+            throw Error('Não foram encontrados dados')
+        } else {
+            return resposta.rows
+        }
 
     }
 
