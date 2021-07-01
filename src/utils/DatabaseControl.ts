@@ -38,11 +38,11 @@ export class NoteDatabase {
 
     }
 
-    public static async findAll(){
+    public static async findAll(user: Number){
 
-        const query = 'select * from notes'
+        const query = 'select * from notes where user = $1'
         const client = await db.connect()
-        await client.query(query)
+        await client.query(query, [user])
 
     }
 
@@ -78,7 +78,7 @@ export class UserDatabase {
 
     public static async find(id: Number){
 
-        const query = 'select from users where id = $1'
+        const query = 'select * from users where id = $1'
         const client = await db.connect()
         await client.query(query, [id])
 
