@@ -1,9 +1,13 @@
 import app from './server'
 import cluster from 'cluster'
+import os from 'os'
+const numCPU = os.cpus().length
 
 if(cluster.isMaster) {
 
-    const worker = cluster.fork()
+    for (let index = 0; index < numCPU; index++) {
+        const worker = cluster.fork()
+    }
 
 } else {
 

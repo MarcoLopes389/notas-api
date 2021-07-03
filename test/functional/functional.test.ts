@@ -5,15 +5,15 @@ describe('Testes de funcionalidades essenciais', () => {
 
     test('Nota sendo retornada com sucesso', async () => {
 
-        const resposta = await supertest(app).get('/notes/ghkv')
+        const { body } = await supertest(app).get('/notes/list').send({ id: 4 })
 
         let ok
 
-        if(typeof resposta == 'object') {
+        if(typeof body == 'object' && body.note != null || body.note == undefined) {
             ok = true
         } else {
             ok = false
-        }
+        } 
         expect(ok).toBe(true)
     })
 

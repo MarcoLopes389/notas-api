@@ -27,12 +27,11 @@ describe('Testes de funcionalidades essenciais', () => {
         expect(status).toBe(404)
     })
 
-    test('Envio de dados de edição inválidos retorna erro 400', async () => {
+    test('Envio de dados de edição inválidos ou faltando retorna erro 400', async () => {
 
         const { status } = await supertest(app).patch('/notes/edit').send({
             id: 2,
             note: 'Nota qualquer',
-            title: 'Um título qualquer',
             user: 1,
             created_at: '2021/06/14',
             updated_at: '2021/06/14'
@@ -41,7 +40,7 @@ describe('Testes de funcionalidades essenciais', () => {
         expect(status).toBe(400)
     })
 
-    test('Envio de id inexistente a edição retorna erro 500', async () => {
+    test('Envio de id inexistente a edição retorna erro 404', async () => {
         
         const { status } = await supertest(app).patch('/notes/edit').send({
             id: 5000,
@@ -52,29 +51,8 @@ describe('Testes de funcionalidades essenciais', () => {
             updated_at: '2021/06/14'
         })
 
-        expect(status).toBe(500)
+        expect(status).toBe(404)
 
-    })
-
-    test('Ao criar uma postagem se ela for repetida retorna uma mensagem', async () => {
-
-        await supertest(app).post('/notes/new').send({
-            note: 'Nota qualquer',
-            title: 'Um título qualquer',
-            user: 1,
-            created_at: '2021/06/14',
-            updated_at: '2021/06/14'
-        })
-
-        const { status } = await supertest(app).post('/notes/new').send({
-            note: 'Nota qualquer',
-            title: 'Um título qualquer',
-            user: 1,
-            created_at: '2021/06/14',
-            updated_at: '2021/06/14'
-        })
-
-        expect(status).toBe(500)
-    })
+    }) 
 
 })

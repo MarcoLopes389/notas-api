@@ -41,6 +41,13 @@ class RouterNotes {
         const { note, title, id } = req.body
         const data = new Date()
 
+        if(note == null || title == null || id == null) {
+            return res.status(400).json({
+                code: 400,
+                err: 'Dados faltando'
+            })
+        }
+
         try {
 
             await NoteDatabase.edit({note: note, title: title, updated_at: data.toString(), created_at: '', user: ''}, id)
@@ -62,6 +69,13 @@ class RouterNotes {
 
         const data = new Date()
         const { note, title, user } = req.body
+
+        if(note == null || title == null || user == null) {
+            return res.status(400).json({
+                code: 400,
+                err: 'Dados faltando'
+            })
+        }
 
         try {
 

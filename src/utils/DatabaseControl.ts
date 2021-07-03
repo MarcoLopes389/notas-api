@@ -27,6 +27,11 @@ export class NoteDatabase {
         const query = 'update notes set note = $1, title = $2, updated_at = $3 where id = $4'
         const { note, title, updated_at } = nota
         const client = await db.connect()
+        const resposta = await client.query('select note from notes where id = $1', [id])
+
+        if(resposta.rows.length == 0) {
+            throw Error('Id não especificado')
+        }
         await client.query(query, [note, title, updated_at, id])
 
     }
@@ -36,7 +41,7 @@ export class NoteDatabase {
         const query = 'select * from notes where id = $1'
         const client = await db.connect()
         const resposta = await client.query(query, [id])
-        if(resposta.rows == []) {
+        if(resposta.rows.length == 0) {
             throw Error('Não foram encontrados dados')
         } else {
             return resposta.rows
@@ -49,7 +54,7 @@ export class NoteDatabase {
         const query = 'select note, title, id from notes where "user" = $1'
         const client = await db.connect()
         const resposta = await client.query(query, [user])
-        if(resposta.rows == []) {
+        if(resposta.rows.length == 0) {
             throw Error('Não foram encontrados dados')
         } else {
             return resposta.rows
