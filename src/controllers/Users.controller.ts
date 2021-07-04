@@ -1,13 +1,17 @@
 import { Request, Response } from 'express'
 import { UserDatabase } from '../utils/DatabaseControl'
-import db from '../config/database'
+import { JWTservice } from '../utils/JWT'
 
 export default class RouterUser {
 
-    public static login(req: Request, res: Response) {
-        
+    public static async login(req: Request, res: Response) {
+        const { password, email } = req.body
+
+        const dados = await UserDatabase.auth(password, email)
+        const access_token = await JWTservice.sign(dados[0], '5 minutes')
+    
         return res.json({
-            ok: true
+            access_token
         })
     }
 

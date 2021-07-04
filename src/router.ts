@@ -1,6 +1,8 @@
 import express from 'express'
-import RouterNotes from "./controllers/Notes.controller"
+import RouterNotes from './controllers/Notes.controller'
 import RouterUser from './controllers/Users.controller'
+
+import { Auth } from './config/auth'
 const router = express.Router()
 
 

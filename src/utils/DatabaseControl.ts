@@ -65,6 +65,14 @@ export class NoteDatabase {
 }
 
 export class UserDatabase {
+
+    public static async auth(password: String, email: String) {
+
+        const query = 'select * from users where "password" = $1 and "email" = $2'
+        const client = await db.connect()
+        const resposta = await client.query(query, [password, email])
+        return resposta.rows
+    }
     
     public static async create(user: user){
 
