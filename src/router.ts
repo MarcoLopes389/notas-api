@@ -7,17 +7,17 @@ const router = express.Router()
 
 
 // Notes
-router.patch('/notes/edit', RouterNotes.edit)
-router.get('/notes/list', RouterNotes.search)
-router.post('/notes/new', RouterNotes.create)
-router.delete('/notes/delete', RouterNotes.delete)
-router.get('/notes/listAll', RouterNotes.searchAll)
+router.patch('/notes/edit', Auth, RouterNotes.edit)
+router.get('/notes/list', Auth, RouterNotes.search)
+router.post('/notes/new', Auth, RouterNotes.create)
+router.delete('/notes/delete', Auth, RouterNotes.delete)
+router.get('/notes/listAll', Auth, RouterNotes.searchAll)
 
 // Users
-router.post('/users/login', RouterUser.login)
+router.post('/users/login', Auth, RouterUser.login)
 router.post('/users/sign_in', RouterUser.create)
-router.delete('/users/delete', RouterUser.delete)
-router.patch('/users/edit', RouterUser.edit)
+router.delete('/users/delete', Auth, RouterUser.delete)
+router.patch('/users/edit', Auth, RouterUser.edit)
 
 export default router
 

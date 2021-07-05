@@ -16,7 +16,7 @@ export class JWTservice {
     }
 
     public static async verify (token: string) {
-        new Promise((resolve, reject) => {
+        return new Promise((resolve, reject) => {
             jwt.verify(token, secret, (err, decoded) => {
                 if(err) {
                     reject(err)
