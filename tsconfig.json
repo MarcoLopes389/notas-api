@@ -1,32 +1,23 @@
 {
   "compilerOptions": {
-    "target": "ES2019",
-    "module": "CommonJS",
-    "moduleResolution": "node",
-    "lib": ["ES2019"],
-    "sourceMap": true,
-    "outDir": "dist",
+    "target": "es6",
+    "module": "commonjs",
     "strict": true,
-    "noImplicitAny": true,
-    "strictNullChecks": true,
-    "strictFunctionTypes": true,
-    "resolveJsonModule": true,
-    "noImplicitThis": true,
-    "alwaysStrict": true,
-    "removeComments": true,
-    "noImplicitReturns": true,
-    "esModuleInterop": true,
-    "allowSyntheticDefaultImports": true,
+    "strictPropertyInitialization": false,
     "baseUrl": ".",
     "paths": {
-      "@src/*":["./src/*"],
-      "@test/*":["./test/*"]
+      "@middlewares/*":["/src/middlewares*"],
+      "@dtos/*":["/src/dtos*"],
+      "@entities/*":["/src/entities*"],
+      "@infra/*":["/src/infra*"],
+      "@repositories/*":["/src/repositories*"],
+      "@services/*":["/src/services*"],
+      "@useCases/*":["/src/useCases*"],
     },
-    "rootDirs": [
-      "./src",
-      "./test"
-    ],
+    "esModuleInterop": true,
     "experimentalDecorators": true,
-    "emitDecoratorMetadata": true
+    "emitDecoratorMetadata": true,
+    "forceConsistentCasingInFileNames": true,
+    "resolveJsonModule": true
   }
 }
