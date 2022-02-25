@@ -1,21 +1,41 @@
-import express, { Request, Response, NextFunction } from 'express'
+import { database } from 'src/config/Database';
+import express, { Express } from 'express'
 import cors from 'cors'
 
 import router from './routes/router'
 
-const app = express()
+class App {
+    server: Express;
 
-app.use(cors())
-app.use(express.json())
+    constructor() {
+        this.server = express()
+    }
 
-app.use('/', router)
+    setup () {
+        this.middlewares()
+        this.routes()
+        this.connections()
+        process.on('SIGTERM', this.finish)
+        process.on('SIGKILL', this.finish)
+    }
 
-app.use((req: Request, res: Response, next: NextFunction) => {
-    
-    res.status(404).json({
-        code: 404,
-        err: 'Not found'
-    })
-})
+    middlewares () {
+        this.server.use(cors())
+        this.server.use(express.json())
+    }
 
-export default app
+    routes () {
+        this.server.use('/', router)
+    }
+
+    async connections () {
+        await database.connect()
+    }
+
+    async finish () {
+        await database.disconnect()
+        process.exit()
+    }
+}
+
+export const app = new App()
