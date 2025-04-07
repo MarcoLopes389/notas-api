@@ -1,23 +1,21 @@
 {
   "compilerOptions": {
-    "target": "es6",
     "module": "commonjs",
-    "strict": true,
-    "strictPropertyInitialization": false,
-    "baseUrl": ".",
-    "paths": {
-      "@middlewares/*":["/src/middlewares*"],
-      "@dtos/*":["/src/dtos*"],
-      "@entities/*":["/src/entities*"],
-      "@infra/*":["/src/infra*"],
-      "@repositories/*":["/src/repositories*"],
-      "@services/*":["/src/services*"],
-      "@useCases/*":["/src/useCases*"],
-    },
-    "esModuleInterop": true,
-    "experimentalDecorators": true,
+    "declaration": true,
+    "removeComments": true,
     "emitDecoratorMetadata": true,
-    "forceConsistentCasingInFileNames": true,
-    "resolveJsonModule": true
+    "experimentalDecorators": true,
+    "allowSyntheticDefaultImports": true,
+    "target": "ES2023",
+    "sourceMap": true,
+    "outDir": "./dist",
+    "baseUrl": "./",
+    "incremental": true,
+    "skipLibCheck": true,
+    "strictNullChecks": false,
+    "noImplicitAny": false,
+    "strictBindCallApply": false,
+    "forceConsistentCasingInFileNames": false,
+    "noFallthroughCasesInSwitch": false,
   }
 }
