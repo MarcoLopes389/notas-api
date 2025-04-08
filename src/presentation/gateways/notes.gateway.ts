@@ -16,14 +16,13 @@ import { CreateNoteUseCase } from 'src/application/use-cases/notes/create-note.u
 import { DeleteNoteUseCase } from 'src/application/use-cases/notes/delete-note.use-case';
 import { ListNotesUseCase } from 'src/application/use-cases/notes/list-notes.use-case';
 import { UpdateNoteUseCase } from 'src/application/use-cases/notes/update-note.use-case';
+import { UserRef } from 'src/infrastructure/auth/decorators/user.decorator';
 
 @WebSocketGateway()
 @UseGuards(WsJwtAuthGuard)
 export class NotesGateway implements OnGatewayConnection, OnGatewayDisconnect {
   @WebSocketServer()
   server: Server;
-
-  private connectedClients: Map<string, string> = new Map();
 
   constructor(
     private readonly createNoteUseCase: CreateNoteUseCase,
@@ -34,34 +33,29 @@ export class NotesGateway implements OnGatewayConnection, OnGatewayDisconnect {
 
   handleConnection(client: Socket) {
     console.log(`Client connected: ${client.id}`);
-
-    if (client.data.user) {
-      this.connectedClients.set(client.id, client.data?.user?.id);
-    }
   }
 
   handleDisconnect(client: Socket) {
     console.log(`Client disconnected: ${client.id}`);
-    this.connectedClients.delete(client.id);
   }
 
   @SubscribeMessage('createNote')
   async handleCreateNote(
     @ConnectedSocket() client: Socket,
     @MessageBody() createNoteDto: CreateNoteDto,
+    @UserRef('id') userId: string,
   ) {
     try {
-      const userId = this.connectedClients.get(client.id);
       if (!userId) {
-        client.emit('error', { message: 'Usuário não autenticado' });
+        client.emit('errorNoteCreate', { message: 'Usuário não autenticado' });
         return;
       }
 
       const note = await this.createNoteUseCase.execute(createNoteDto, userId);
 
-      client.emit('noteCreated', note);
+      client.broadcast.emit('noteCreated', note);
     } catch (error) {
-      client.emit('error', { message: error.message });
+      client.emit('errorNoteCreate', { message: error.message });
     }
   }
 
@@ -69,11 +63,11 @@ export class NotesGateway implements OnGatewayConnection, OnGatewayDisconnect {
   async handleUpdateNote(
     @ConnectedSocket() client: Socket,
     @MessageBody() data: { id: string; data: UpdateNoteDto },
+    @UserRef('id') userId: string,
   ) {
     try {
-      const userId = this.connectedClients.get(client.id);
       if (!userId) {
-        client.emit('error', { message: 'Usuário não autenticado' });
+        client.emit('errorNoteUpdate', { message: 'Usuário não autenticado' });
         return;
       }
 
@@ -83,9 +77,9 @@ export class NotesGateway implements OnGatewayConnection, OnGatewayDisconnect {
         data.data,
       );
 
-      client.emit('noteUpdated', note);
+      client.broadcast.emit('noteUpdated', note);
     } catch (error) {
-      client.emit('error', { message: error.message });
+      client.emit('errorNoteUpdate', { message: error.message });
     }
   }
 
@@ -93,34 +87,36 @@ export class NotesGateway implements OnGatewayConnection, OnGatewayDisconnect {
   async handleDeleteNote(
     @ConnectedSocket() client: Socket,
     @MessageBody() noteId: string,
+    @UserRef('id') userId: string,
   ) {
     try {
-      const userId = this.connectedClients.get(client.id);
       if (!userId) {
-        client.emit('error', { message: 'Usuário não autenticado' });
+        client.emit('errorNoteDelete', { message: 'Usuário não autenticado' });
         return;
       }
 
       await this.deleteNoteUseCase.execute(noteId, userId);
-      client.emit('noteDeleted', { id: noteId });
+      client.broadcast.emit('noteDeleted', { id: noteId });
     } catch (error) {
-      client.emit('error', { message: error.message });
+      client.emit('errorNoteDelete', { message: error.message });
     }
   }
 
   @SubscribeMessage('getNotes')
-  async handleGetNotes(@ConnectedSocket() client: Socket) {
+  async handleGetNotes(
+    @ConnectedSocket() client: Socket,
+    @UserRef('id') userId: string,
+  ) {
     try {
-      const userId = this.connectedClients.get(client.id);
       if (!userId) {
-        client.emit('error', { message: 'Usuário não autenticado' });
+        client.emit('errorNotesList', { message: 'Usuário não autenticado' });
         return;
       }
 
       const notes = await this.listNotesUseCase.execute(userId);
       client.emit('notesList', notes);
     } catch (error) {
-      client.emit('error', { message: error.message });
+      client.emit('errorNotesList', { message: error.message });
     }
   }
 }
