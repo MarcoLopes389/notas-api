@@ -1,18 +1,19 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule, ConfigService } from '@nestjs/config';
-import { UserEntity } from './persistence/typeorm/entities/user.entity';
-import { NoteEntity } from './persistence/typeorm/entities/note.entity';
-import { NoteShareEntity } from './persistence/typeorm/entities/note-share.entity';
-import { NoteShareRepository } from './persistence/typeorm/repositories/note-share.repository';
-import { NoteRepository } from './persistence/typeorm/repositories/note.repository';
-import { UserRepository } from './persistence/typeorm/repositories/user.repository';
-import { getTypeOrmConfig } from './persistence/typeorm/typeorm.config';
+import { NoteShareRepository } from './persistence/repositories/note-share.repository';
+import { NoteRepository } from './persistence/repositories/note.repository';
+import { UserRepository } from './persistence/repositories/user.repository';
+import { getTypeOrmConfig } from './persistence/typeorm.config';
 import { JwtModule } from '@nestjs/jwt';
 import { PassportModule } from '@nestjs/passport';
 import { AuthService } from './auth/auth.service';
 import { JwtStrategy } from './auth/strategies/jwt.strategy';
 import { LocalStrategy } from './auth/strategies/local.strategy';
+import { NoteShareEntity } from './persistence/entities/note-share.entity';
+import { NoteEntity } from './persistence/entities/note.entity';
+import { UserEntity } from './persistence/entities/user.entity';
+import { CryptographyAdapter } from './security/cryptography.adapter';
 
 @Module({
   imports: [
@@ -39,7 +40,15 @@ import { LocalStrategy } from './auth/strategies/local.strategy';
     AuthService,
     JwtStrategy,
     LocalStrategy,
+    CryptographyAdapter,
   ],
-  exports: [UserRepository, NoteRepository, NoteShareRepository, AuthService],
+  exports: [
+    UserRepository,
+    NoteRepository,
+    NoteShareRepository,
+    AuthService,
+    CryptographyAdapter,
+    JwtModule,
+  ],
 })
 export class InfrastructureModule {}

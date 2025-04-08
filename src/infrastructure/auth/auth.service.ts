@@ -2,14 +2,15 @@ import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { User } from 'src/domain/users/entities/user.entity';
 import { LoginUserDto } from 'src/application/dtos/auth/login-user.dto';
-import { UserRepository } from '../persistence/typeorm/repositories/user.repository';
-import { compare } from 'bcrypt';
+import { UserRepository } from '../persistence/repositories/user.repository';
+import { CryptographyAdapter } from '../security/cryptography.adapter';
 
 @Injectable()
 export class AuthService {
   constructor(
     private readonly jwtService: JwtService,
     private readonly userRepository: UserRepository,
+    private readonly cryptographyAdapter: CryptographyAdapter,
   ) {}
 
   async validateUser(loginUserDto: LoginUserDto): Promise<User> {
@@ -19,9 +20,9 @@ export class AuthService {
       throw new UnauthorizedException('Usuário não encontrado');
     }
 
-    const isPasswordValid = await compare(
+    const isPasswordValid = await this.cryptographyAdapter.compare(
       loginUserDto.password,
-      user.getPassword().getValue(),
+      user.getPassword(),
     );
 
     if (!isPasswordValid) {
@@ -34,7 +35,7 @@ export class AuthService {
   generateTokens(user: User) {
     const payload = {
       sub: user.getId(),
-      email: user.getEmail().getValue(),
+      email: user.getEmail(),
     };
 
     return {

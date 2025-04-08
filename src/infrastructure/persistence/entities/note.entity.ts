@@ -8,7 +8,7 @@ import {
   JoinColumn,
 } from 'typeorm';
 import { UserEntity } from './user.entity';
-import { Note } from '../../../../domain/notes/entities/note.entity';
+import { Note } from 'src/domain/notes/entities/note.entity';
 
 @Entity('notes')
 export class NoteEntity {

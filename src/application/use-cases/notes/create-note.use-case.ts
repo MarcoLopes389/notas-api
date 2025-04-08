@@ -1,8 +1,8 @@
 import { Injectable } from '@nestjs/common';
 import { CreateNoteDto } from 'src/application/dtos/notes/create-note.dto';
 import { Note } from 'src/domain/notes/entities/note.entity';
-import { NoteRepository } from 'src/infrastructure/persistence/typeorm/repositories/note.repository';
-import { UserRepository } from 'src/infrastructure/persistence/typeorm/repositories/user.repository';
+import { NoteRepository } from 'src/infrastructure/persistence/repositories/note.repository';
+import { UserRepository } from 'src/infrastructure/persistence/repositories/user.repository';
 
 @Injectable()
 export class CreateNoteUseCase {

@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { UpdateUserDto } from 'src/application/dtos/users/update-user.dto';
 import { User } from 'src/domain/users/entities/user.entity';
-import { UserRepository } from 'src/infrastructure/persistence/typeorm/repositories/user.repository';
+import { UserRepository } from 'src/infrastructure/persistence/repositories/user.repository';
 
 @Injectable()
 export class UpdateUserUseCase {
@@ -23,7 +23,7 @@ export class UpdateUserUseCase {
 
     if (
       updateUserDto.email &&
-      updateUserDto.email !== existingUser.getEmail().getValue()
+      updateUserDto.email !== existingUser.getEmail()
     ) {
       this.verifyIfEmailAlreadyExists(updateUserDto.email);
 

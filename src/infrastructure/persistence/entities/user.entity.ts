@@ -7,7 +7,7 @@ import {
   OneToMany,
 } from 'typeorm';
 import { NoteEntity } from './note.entity';
-import { User } from '../../../../domain/users/entities/user.entity';
+import { User } from 'src/domain/users/entities/user.entity';
 
 @Entity('users')
 export class UserEntity {
@@ -47,8 +47,8 @@ export class UserEntity {
     const userEntity = new UserEntity();
     userEntity.id = user.getId();
     userEntity.name = user.getName();
-    userEntity.email = user.getEmail().getValue();
-    userEntity.password = user.getPassword().getValue();
+    userEntity.email = user.getEmail();
+    userEntity.password = user.getPassword();
     userEntity.createdAt = user.getCreatedAt();
     userEntity.updatedAt = user.getUpdatedAt();
     return userEntity;

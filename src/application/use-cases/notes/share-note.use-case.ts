@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
-import { NoteRepository } from '../../../infrastructure/persistence/typeorm/repositories/note.repository';
-import { UserRepository } from '../../../infrastructure/persistence/typeorm/repositories/user.repository';
-import { NoteShareRepository } from '../../../infrastructure/persistence/typeorm/repositories/note-share.repository';
+import { NoteRepository } from '../../../infrastructure/persistence/repositories/note.repository';
+import { UserRepository } from '../../../infrastructure/persistence/repositories/user.repository';
+import { NoteShareRepository } from '../../../infrastructure/persistence/repositories/note-share.repository';
 import { NoteShare } from '../../../domain/notes/value-objects/note-share.value-object';
 import { ShareNoteDto } from '../../dtos/notes/share-note.dto';
 

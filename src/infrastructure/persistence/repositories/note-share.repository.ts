@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { NoteShareEntity } from '../entities/note-share.entity';
-import { NoteShare } from '../../../../domain/notes/value-objects/note-share.value-object';
+import { NoteShare } from '../../../domain/notes/value-objects/note-share.value-object';
 
 @Injectable()
 export class NoteShareRepository {

@@ -17,11 +17,7 @@ import { DeleteNoteUseCase } from 'src/application/use-cases/notes/delete-note.u
 import { ListNotesUseCase } from 'src/application/use-cases/notes/list-notes.use-case';
 import { UpdateNoteUseCase } from 'src/application/use-cases/notes/update-note.use-case';
 
-@WebSocketGateway({
-  cors: {
-    origin: '*',
-  },
-})
+@WebSocketGateway()
 @UseGuards(WsJwtAuthGuard)
 export class NotesGateway implements OnGatewayConnection, OnGatewayDisconnect {
   @WebSocketServer()

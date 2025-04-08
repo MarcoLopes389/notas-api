@@ -2,7 +2,7 @@ import { CanActivate, ExecutionContext, Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { WsException } from '@nestjs/websockets';
 import { Socket } from 'socket.io';
-import { UserRepository } from 'src/infrastructure/persistence/typeorm/repositories/user.repository';
+import { UserRepository } from 'src/infrastructure/persistence/repositories/user.repository';
 
 @Injectable()
 export class WsJwtAuthGuard implements CanActivate {

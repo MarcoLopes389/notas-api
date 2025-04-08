@@ -1,4 +1,4 @@
-import { Controller, Post, Put, Body, Param } from '@nestjs/common';
+import { Controller, Post, Put, Body, Param, UseGuards } from '@nestjs/common';
 import { ApiTags, ApiOperation, ApiResponse } from '@nestjs/swagger';
 import { CreateUserDto } from 'src/application/dtos/users/create-user.dto';
 import { UpdateUserDto } from 'src/application/dtos/users/update-user.dto';
@@ -6,6 +6,7 @@ import { CreateUserUseCase } from 'src/application/use-cases/users/create-user.u
 import { UpdateUserUseCase } from 'src/application/use-cases/users/update-user.use-case';
 import { User } from 'src/domain/users/entities/user.entity';
 import { UserRef } from 'src/infrastructure/auth/decorators/user.decorator';
+import { JwtAuthGuard } from 'src/infrastructure/auth/guards/jwt-auth.guard';
 
 @ApiTags('Usuários')
 @Controller('users')
@@ -34,6 +35,7 @@ export class UsersController {
     status: 400,
     description: 'Email já em uso por outro usuário',
   })
+  @UseGuards(JwtAuthGuard)
   async updateUser(
     @Param('id') id: string,
     @Body() updateUserDto: UpdateUserDto,

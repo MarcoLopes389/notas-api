@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
-import { NoteShareRepository } from 'src/infrastructure/persistence/typeorm/repositories/note-share.repository';
-import { NoteRepository } from 'src/infrastructure/persistence/typeorm/repositories/note.repository';
+import { NoteShareRepository } from 'src/infrastructure/persistence/repositories/note-share.repository';
+import { NoteRepository } from 'src/infrastructure/persistence/repositories/note.repository';
 
 @Injectable()
 export class DeleteNoteUseCase {

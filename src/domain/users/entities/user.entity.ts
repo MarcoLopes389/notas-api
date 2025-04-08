@@ -1,12 +1,11 @@
 import { Email } from '../value-objects/email.value-object';
-import { Password } from '../value-objects/password.value-object';
 import { EmptyNameException } from '../exceptions/empty-name.exception';
 
 export class User {
   private id: string;
   private name: string;
   private email: Email;
-  private password: Password;
+  private password: string;
   private createdAt: Date;
   private updatedAt: Date;
 
@@ -22,7 +21,7 @@ export class User {
     this.id = id;
     this.name = name;
     this.email = new Email(email);
-    this.password = new Password(password);
+    this.password = password;
     this.createdAt = createdAt || new Date();
     this.updatedAt = updatedAt || new Date();
   }
@@ -35,11 +34,11 @@ export class User {
     return this.name;
   }
 
-  getEmail(): Email {
-    return this.email;
+  getEmail(): string {
+    return this.email.getValue();
   }
 
-  getPassword(): Password {
+  getPassword(): string {
     return this.password;
   }
 
@@ -61,7 +60,7 @@ export class User {
   }
 
   updatePassword(newPassword: string): void {
-    this.password = new Password(newPassword);
+    this.password = newPassword;
   }
 
   private validateName(name: string): void {

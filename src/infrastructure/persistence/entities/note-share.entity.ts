@@ -8,8 +8,8 @@ import {
 } from 'typeorm';
 import { UserEntity } from './user.entity';
 import { NoteEntity } from './note.entity';
-import { NoteShare } from '../../../../domain/notes/value-objects/note-share.value-object';
-import { Permission } from '../../../../domain/notes/enums/permission.enum';
+import { Permission } from 'src/domain/notes/enums/permission.enum';
+import { NoteShare } from 'src/domain/notes/value-objects/note-share.value-object';
 
 @Entity('note_shares')
 export class NoteShareEntity {
